@@ -39,7 +39,7 @@ if (empty($apiKey)) {
 $wa->registerAndUseStyle(
     'mod_mycompanymap.site',
     'mod_mycompanymap/mycompanymap.css',
-    [],
+    ['version' => '2.0.2'],
     [],
     []
 );
@@ -60,7 +60,7 @@ $wa->registerScript(
 $wa->registerAndUseScript(
     'mod_mycompanymap.site',
     'mod_mycompanymap/mycompanymap.js',
-    [],
+    ['version' => '2.0.2'],
     ['defer' => true],
     ['yandex.maps.api']
 );

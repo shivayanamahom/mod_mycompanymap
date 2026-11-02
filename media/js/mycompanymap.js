@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     const mapContainer = document.getElementById(options.mapId);
     if (!mapContainer) continue;
 
-    if (!options.customMarker) {
-        ymaps3.import.registerCdn('https://cdn.jsdelivr.net/npm/{package}', '@yandex/ymaps3-default-ui-theme@0.0.25');
-    }
+    const packages = ['@yandex/ymaps3-clusterer@0.0.13'];
+    if (!options.customMarker) packages.push('@yandex/ymaps3-default-ui-theme@0.0.25');
+    ymaps3.import.registerCdn('https://cdn.jsdelivr.net/npm/{package}', packages);
     const [{ YMapDefaultMarker }, { YMapClusterer, clusterByGrid }] = await Promise.all([
         options.customMarker ? Promise.resolve({}) : ymaps3.import('@yandex/ymaps3-default-ui-theme'),
         ymaps3.import('@yandex/ymaps3-clusterer')

@@ -1,5 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <updates>
+  <update>
+    <name>My Company Map</name>
+    <description>Карта компаний на Яндекс Картах для Joomla 5 и 6</description>
+    <element>mod_mycompanymap</element>
+    <type>module</type>
+    <client>site</client>
+    <version>2.0.2</version>
+    <infourl title="My Company Map v2.0.2">https://github.com/shivayanamahom/mod_mycompanymap/releases/tag/v2.0.2</infourl>
+    <downloads>
+      <downloadurl type="full" format="zip">https://github.com/shivayanamahom/mod_mycompanymap/releases/download/v2.0.2/mod_mycompanymap-2.0.2.zip</downloadurl>
+    </downloads>
+    <sha256>3a402b6a65606558c88c1b92b1bb1208005df41672aab2916853e13ee6e5811f</sha256>
+    <maintainer>Dharma Design</maintainer>
+    <maintainerurl>https://github.com/shivayanamahom</maintainerurl>
+    <targetplatform name="joomla" version="((5|6)\..*)" />
+  </update>
   <update>
     <name>My Company Map</name>
     <description>Карта компаний на Яндекс Картах для Joomla 5 и 6</description>
@@ -8,7 +24,9 @@
     <client>site</client>
     <version>2.0.1</version>
     <infourl title="My Company Map v2.0.1">https://github.com/shivayanamahom/mod_mycompanymap/releases/tag/v2.0.1</infourl>
-    <downloads><downloadurl type="full" format="zip">https://github.com/shivayanamahom/mod_mycompanymap/releases/download/v2.0.1/mod_mycompanymap-2.0.1.zip</downloadurl></downloads>
+    <downloads>
+      <downloadurl type="full" format="zip">https://github.com/shivayanamahom/mod_mycompanymap/releases/download/v2.0.1/mod_mycompanymap-2.0.1.zip</downloadurl>
+    </downloads>
     <sha256>beb4a39acd37c9d40932a3acbaaad88e60b8fc705bc277e0939d1b81068f62be</sha256>
     <maintainer>Dharma Design</maintainer>
     <maintainerurl>https://github.com/shivayanamahom</maintainerurl>

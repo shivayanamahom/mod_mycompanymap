@@ -140,6 +140,7 @@ class MycompanymapHelper
             'cardsContainerId' => 'mycompanymap-cards-' . $moduleId,
             'defaultCenter' => $defaultCenter,
             'defaultZoom' => $defaultZoom,
+            'showDefaultFeatures' => (bool) $params->get('show_default_features', 1),
             'companies' => $companies,
             'lang' => Factory::getLanguage()->getTag() === 'ru-RU' ? 'ru_RU' : 'en_US',
             'icon_color' => $iconColors[$iconStyle] ?? '#4DA6FF',

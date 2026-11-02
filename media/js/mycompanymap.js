@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
     await ymaps3.ready;
 
-    const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } = ymaps3;
+    const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapFeatureDataSource, YMapLayer, YMapMarker } = ymaps3;
     const mapContainer = document.getElementById(options.mapId);
     if (!mapContainer) continue;
 
@@ -72,7 +72,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (loading) loading.hidden = true;
     const map = new YMap(mapContainer, mapOptions);
     map.addChild(new YMapDefaultSchemeLayer({}));
-    map.addChild(new YMapDefaultFeaturesLayer({}));
+    if (options.showDefaultFeatures !== false) {
+        map.addChild(new YMapDefaultFeaturesLayer({}));
+    }
+    // Keep company pins on their own source so they remain visible when Yandex POIs are hidden.
+    const markerSource = 'mycompanymap-source-' + moduleId;
+    map.addChild(new YMapFeatureDataSource({ id: markerSource }));
+    map.addChild(new YMapLayer({ source: markerSource, type: 'markers', zIndex: 1800 }));
 
     function showBalloon(companyData) {
         if (currentBalloon) {
@@ -116,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             };
         }
 
-        const balloonMarker = new YMapMarker({ coordinates: companyData.coords, zIndex: 2500 }, balloonDiv);
+        const balloonMarker = new YMapMarker({ coordinates: companyData.coords, source: markerSource, zIndex: 2500 }, balloonDiv);
         map.addChild(balloonMarker);
         currentBalloon = balloonMarker;
     }
@@ -139,10 +145,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 pin.append(label);
             }
             pin.addEventListener('click', () => showBalloon(feature.properties));
-            return new YMapMarker({ coordinates: feature.geometry.coordinates }, pin);
+            return new YMapMarker({ coordinates: feature.geometry.coordinates, source: markerSource }, pin);
         }
         return new YMapDefaultMarker({
             coordinates: feature.geometry.coordinates,
+            source: markerSource,
             title: feature.properties.name || '',
             draggable: false,
             color: options.icon_color || '#4DA6FF',
@@ -163,7 +170,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         `;
         clusterDiv.textContent = clusterSize;
 
-        const clusterMarker = new YMapMarker({ coordinates: coordinates, zIndex: 1500 }, clusterDiv);
+        const clusterMarker = new YMapMarker({ coordinates: coordinates, source: markerSource, zIndex: 1500 }, clusterDiv);
 
         // --- Зум при клике на кластер ---
         clusterDiv.addEventListener('click', function (e) {

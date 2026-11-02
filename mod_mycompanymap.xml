@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" client="site" method="upgrade">
+    <name>MOD_MYCOMPANYMAP</name>
+    <author>Максим Доманов</author>
+    <creationDate>November 2025</creationDate>
+    <copyright>Copyright (C) 2025 Dharma design. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <authorEmail>info@hyper-web.ru</authorEmail>
+    <authorUrl>https://dmsite.ru/</authorUrl>
+    <version>2.0.1</version>
+    <description>MOD_MYCOMPANYMAP_XML_DESCRIPTION</description>
+
+    <updateservers>
+        <server type="extension" priority="1" name="My Company Map Updates">https://raw.githubusercontent.com/shivayanamahom/mod_mycompanymap/main/updates.xml</server>
+    </updateservers>
+    
+    <namespace path="src">Joomla\Module\Mycompanymap\Site</namespace>
+    
+    <files>
+        <filename module="mod_mycompanymap">mod_mycompanymap.php</filename>
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+        <folder>language</folder>
+    </files>
+    
+    <media destination="mod_mycompanymap" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+        <filename>joomla.asset.json</filename>
+    </media>
+    
+    <languages folder="language">
+        <language tag="en-GB">en-GB/mod_mycompanymap.ini</language>
+        <language tag="en-GB">en-GB/mod_mycompanymap.sys.ini</language>
+        <language tag="ru-RU">ru-RU/mod_mycompanymap.ini</language>
+        <language tag="ru-RU">ru-RU/mod_mycompanymap.sys.ini</language>
+    </languages>
+    
+    <config>
+        <fields name="params">
+            <fieldset name="settings" label="MOD_MYCOMPANYMAP_SETTINGS_LABEL">
+                <field
+                    name="yandex_api_key"
+                    type="text"
+                    label="MOD_MYCOMPANYMAP_API_KEY_LABEL"
+                    description="MOD_MYCOMPANYMAP_API_KEY_DESC"
+                    required="true"
+                />
+                
+                <field
+                    name="map_width"
+                    type="text"
+                    label="MOD_MYCOMPANYMAP_WIDTH_LABEL"
+                    description="MOD_MYCOMPANYMAP_WIDTH_DESC"
+                    default="100%"
+                />
+                
+                <field
+                    name="map_height"
+                    type="text"
+                    label="MOD_MYCOMPANYMAP_HEIGHT_LABEL"
+                    description="MOD_MYCOMPANYMAP_HEIGHT_DESC"
+                    default="400px"
+                />
+                
+                <field
+                    name="icon_style"
+                    type="list"
+                    label="MOD_MYCOMPANYMAP_ICON_STYLE_LABEL"
+                    description="MOD_MYCOMPANYMAP_ICON_STYLE_DESC"
+                    default="islands#blueIcon"
+                >
+                    <option value="islands#blueIcon">MOD_MYCOMPANYMAP_ICON_BLUE</option>
+                    <option value="islands#redIcon">MOD_MYCOMPANYMAP_ICON_RED</option>
+                    <option value="islands#greenIcon">MOD_MYCOMPANYMAP_ICON_GREEN</option>
+                    <option value="islands#violetIcon">MOD_MYCOMPANYMAP_ICON_VIOLET</option>
+                    <option value="islands#darkOrangeIcon">MOD_MYCOMPANYMAP_ICON_ORANGE</option>
+                </field>
+                
+                <field
+                    name="map_default_center"
+                    type="text"
+                    label="MOD_MYCOMPANYMAP_DEFAULT_CENTER_LABEL"
+                    description="MOD_MYCOMPANYMAP_DEFAULT_CENTER_DESC"
+                    default="55.751574, 37.573856"
+                    hint="lat,lng"
+                />
+                
+                <field
+                    name="map_default_zoom"
+                    type="number"
+                    label="MOD_MYCOMPANYMAP_DEFAULT_ZOOM_LABEL"
+                    description="MOD_MYCOMPANYMAP_DEFAULT_ZOOM_DESC"
+                    default="10"
+                    min="1"
+                    max="19"
+                    step="1"
+                />
+            </fieldset>
+            
+            <fieldset name="advanced" label="JGLOBAL_FIELDSET_ADVANCED">
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" class="form-select" default="_:default" />
+            </fieldset>
+
+            <fieldset name="companies" label="MOD_MYCOMPANYMAP_COMPANIES_LABEL">
+                <field
+                    name="company_items"
+                    type="subform"
+                    label=""
+                    description="MOD_MYCOMPANYMAP_COMPANY_ITEMS_DESC"
+                    layout="joomla.form.field.subform.repeatable-table"
+                    multiple="true"
+                    buttons="add,remove"
+                    min="0"
+                    max="1000"
+                >
+                    <form>
+                        <field
+                            name="company_name"
+                            type="text"
+                            label="MOD_MYCOMPANYMAP_FIELD_NAME_LABEL"
+                            required="true"
+                            size="30"
+                            hint="MOD_MYCOMPANYMAP_FIELD_NAME_HINT"
+                        />
+                        
+                        <field
+                            name="company_address"
+                            type="text"
+                            label="MOD_MYCOMPANYMAP_FIELD_ADDRESS_LABEL"
+                            size="30"
+                            hint="MOD_MYCOMPANYMAP_FIELD_ADDRESS_HINT"
+                        />
+                        
+                        <field
+                            name="company_phone"
+                            type="text"
+                            label="MOD_MYCOMPANYMAP_FIELD_PHONE_LABEL"
+                            size="15"
+                            hint="MOD_MYCOMPANYMAP_FIELD_PHONE_HINT"
+                        />
+                        
+                        <field
+                            name="company_city"
+                            type="text"
+                            label="MOD_MYCOMPANYMAP_FIELD_CITY_LABEL"
+                            required="true"
+                            size="20"
+                            hint="MOD_MYCOMPANYMAP_FIELD_CITY_HINT"
+                        />
+                        
+                        <field
+                            name="company_anchor"
+                            type="text"
+                            label="MOD_MYCOMPANYMAP_FIELD_ANCHOR_LABEL"
+                            description="MOD_MYCOMPANYMAP_FIELD_ANCHOR_DESC"
+                            filter="cmd"
+                        />
+
+                        <field
+                            name="company_coords"
+                            type="text"
+                            label="MOD_MYCOMPANYMAP_FIELD_COORDS_LABEL"
+                            description="MOD_MYCOMPANYMAP_FIELD_COORDS_DESC"
+                            required="true"
+                            size="30"
+                            hint="MOD_MYCOMPANYMAP_FIELD_COORDS_HINT"
+                            pattern="^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$"
+                        />
+                    </form>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

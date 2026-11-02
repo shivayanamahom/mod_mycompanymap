@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "mod_mycompanymap",
+  "version": "2.0.1",
+  "description": "Yandex Maps module for companies",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "mod_mycompanymap.site",
+      "type": "style",
+      "uri": "mod_mycompanymap/mycompanymap.css"
+    },
+    {
+      "name": "mod_mycompanymap.site",
+      "type": "script",
+      "uri": "mod_mycompanymap/mycompanymap.js",
+      "dependencies": [
+        "yandex.maps.api"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    }
+  ]
+}

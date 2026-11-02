@@ -1,0 +1,125 @@
+/* === Стили для контейнера карточек === */
+.company-cards-container {
+    display: grid; /* Используем CSS Grid */
+    gap: 20px; /* Пространство между карточками (настройте по вкусу) */
+
+    /* --- МОБИЛЬНЫЕ УСТРОЙСТВА (По умолчанию) --- */
+    /* Экраны < 992px: 1 колонка */
+    grid-template-columns: 1fr; /* Одна колонка, занимающая всю ширину */
+}
+
+/* --- СРЕДНИЕ ЭКРАНЫ (Планшеты и небольшие десктопы) --- */
+/* Экраны >= 992px и < 1200px: 2 колонки */
+@media (min-width: 992px) {
+    .company-cards-container {
+        grid-template-columns: repeat(2, 1fr); /* Две колонки равной ширины */
+    }
+}
+
+/* --- БОЛЬШИЕ ЭКРАНЫ (Десктопы) --- */
+/* Экраны >= 1200px: 3 колонки */
+@media (min-width: 1200px) {
+    .company-cards-container {
+        grid-template-columns: repeat(3, 1fr); /* Три колонки равной ширины */
+    }
+}
+
+/* === Стили для самих карточек (основные стили уже должны быть) === */
+.company-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    /* display: block; убираем, если был, grid сам управляет отображением */
+}
+
+.company-card.hidden-card {
+    /* Важно! Для grid нельзя использовать display: none, если нужно сохранить
+       анимацию или если есть другие причины. Но для простого скрытия
+       display: none самый надежный способ. */
+    display: none;
+}
+
+.company-card.highlighted {
+   border: 2px solid #0d6efd; /* Пример подсветки */
+   box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+}
+
+/* Добавьте остальные стили для .company-card h4, p, button и т.д., если нужно */
+.company-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #337ab7;
+}
+
+.company-card p {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.company-card p strong {
+    display: inline-block;
+    min-width: 60px;
+}
+
+.company-card button.center-on-map-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 0.85em;
+    cursor: pointer;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.company-card button.center-on-map-btn:hover {
+    background-color: #4cae4c;
+}
+
+/* === Стили для фильтра и карты (оставляем или адаптируем) === */
+.my-company-map-module {
+    margin-bottom: 20px;
+}
+
+.city-filter-container {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.city-filter-container label {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.city-filter-container select {
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    min-width: 150px;
+}
+
+.map-container {
+    position: relative;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+
+/* Скрываем плейсхолдер, когда карта загружена (через класс на map-container) */
+.map-container.loaded .map-loading-placeholder {
+    opacity: 0;
+    visibility: hidden;
+}
+.map-container > div { background: #fff !important; }
+.company-cards-container{margin-top:50px}

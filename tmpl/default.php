@@ -35,11 +35,19 @@ if (empty($apiKey)) {
     return;
 }
 
+// Version local assets by their content so updates invalidate browser caches.
+$assetVersion = static function (string $relativePath): string {
+    $path = JPATH_ROOT . '/media/mod_mycompanymap/' . $relativePath;
+    $hash = is_readable($path) ? hash_file('sha256', $path) : false;
+
+    return $hash ? substr($hash, 0, 12) : '2.0.5';
+};
+
 // Register and use module CSS
 $wa->registerAndUseStyle(
     'mod_mycompanymap.site',
     'mod_mycompanymap/mycompanymap.css',
-    ['version' => '2.0.3'],
+    ['version' => $assetVersion('css/mycompanymap.css')],
     [],
     []
 );
@@ -60,7 +68,7 @@ $wa->registerScript(
 $wa->registerAndUseScript(
     'mod_mycompanymap.site',
     'mod_mycompanymap/mycompanymap.js',
-    ['version' => '2.0.3'],
+    ['version' => $assetVersion('js/mycompanymap.js')],
     ['defer' => true],
     ['yandex.maps.api']
 );

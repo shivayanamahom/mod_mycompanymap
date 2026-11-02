@@ -152,7 +152,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             source: markerSource,
             title: feature.properties.name || '',
             draggable: false,
-            color: options.icon_color || '#4DA6FF',
+            // The v3 default marker accepts named presets or a day/night color object.
+            // Passing a hex string directly throws and aborts cluster rendering.
+            color: {
+                day: options.icon_color || '#4DA6FF',
+                night: options.icon_color || '#4DA6FF'
+            },
             onClick: () => showBalloon(feature.properties)
         });
     };

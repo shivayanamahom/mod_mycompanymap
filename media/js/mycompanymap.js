@@ -55,10 +55,21 @@ document.addEventListener('DOMContentLoaded', async function () {
         margin: [60, 60, 60, 60]
     };
     if (mapContainer.clientWidth > 0 && mapContainer.clientHeight > 0) {
-        const marginPx = Math.max(40, Math.min(mapContainer.clientWidth, mapContainer.clientHeight) * 0.15);
+        const marginPx = Math.max(64, Math.min(120, Math.min(mapContainer.clientWidth, mapContainer.clientHeight) * 0.23));
         mapOptions.margin = [marginPx, marginPx, marginPx, marginPx];
     }
 
+    // Optional floating content can reserve visible space when fitting bounds.
+    const overlay = options.overlaySelector ? root.querySelector(options.overlaySelector) : null;
+    if (overlay) {
+        const mapRect = mapContainer.getBoundingClientRect();
+        const overlayRect = overlay.getBoundingClientRect();
+        const bottomInset = Math.max(0, mapRect.bottom - overlayRect.top);
+        mapOptions.margin = [64, 64, Math.max(0, Math.min(mapRect.height - 100, bottomInset + 40)), 64];
+    }
+
+    const loading = mapContainer.querySelector('.map-loading-placeholder');
+    if (loading) loading.hidden = true;
     const map = new YMap(mapContainer, mapOptions);
     map.addChild(new YMapDefaultSchemeLayer({}));
     map.addChild(new YMapDefaultFeaturesLayer({}));
@@ -72,36 +83,38 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         map.update({ location: { center: companyData.coords, zoom: 15, duration: 300 } });
 
-        const balloonDiv = document.createElement('div');
-        balloonDiv.className = 'mycompanymap-balloon';
-        balloonDiv.style.cssText = `
-            background:#fff;border:1px solid #ccc;border-radius:6px;
-            box-shadow:0 3px 10px rgba(0,0,0,0.15);max-width:320px;min-width:280px;
-            font-size:14px;line-height:1.5;color:#333;padding:16px 24px;position:relative;
-            transform:translate(-50%,calc(-100% - 12px));pointer-events:auto;
-        `;
-        const title = document.createElement('strong');
-        title.textContent = companyData.name || '';
-        balloonDiv.append(title);
-        [companyData.company_address, companyData.company_phone, companyData.company_city].filter(Boolean).forEach(value => {
-            const line = document.createElement('div');
-            line.textContent = value;
-            balloonDiv.append(line);
-        });
-        const close = document.createElement('button');
-        close.type = 'button';
-        close.title = options.messages?.close || 'Close';
-        close.setAttribute('aria-label', options.messages?.close || 'Close');
-        close.style.cssText = 'position:absolute;top:4px;right:4px;width:24px;height:24px;border:none;background:transparent;font-size:18px;cursor:pointer;';
-        close.textContent = '×';
-        balloonDiv.append(close);
-        balloonDiv.querySelector('button').onclick = function (e) {
-            e.stopPropagation();
-            if (currentBalloon) {
-                try { map.removeChild(currentBalloon); } catch (e) { }
-                currentBalloon = null;
-            }
+        const balloonTemplate = root.querySelector('template[data-map-balloon]');
+        const balloonContent = balloonTemplate?.content.firstElementChild;
+        const balloonDiv = balloonContent?.cloneNode(true) || document.createElement('div');
+        balloonDiv.classList.add('mycompanymap-balloon');
+        if (!balloonContent) {
+            balloonDiv.innerHTML = '<strong data-balloon-title></strong><div data-balloon-address></div><a data-balloon-phone></a><button type="button" data-balloon-close>×</button>';
+        }
+        const setText = (selector, value) => {
+            const el = balloonDiv.querySelector(selector);
+            if (!el) return;
+            el.textContent = value || '';
+            el.hidden = !value;
         };
+        setText('[data-balloon-title]', companyData.name);
+        setText('[data-balloon-address]', companyData.company_address);
+        setText('[data-balloon-phone]', companyData.company_phone);
+        const phone = balloonDiv.querySelector('[data-balloon-phone]');
+        if (phone && phone.tagName === 'A' && companyData.company_phone) {
+            phone.href = 'tel:' + companyData.company_phone.replace(/[^0-9+]/g, '');
+        }
+        const close = balloonDiv.querySelector('[data-balloon-close]');
+        if (close) {
+            close.title = options.messages?.close || 'Close';
+            close.setAttribute('aria-label', options.messages?.close || 'Close');
+            close.onclick = function (e) {
+                e.stopPropagation();
+                if (currentBalloon) {
+                    try { map.removeChild(currentBalloon); } catch (error) {}
+                    currentBalloon = null;
+                }
+            };
+        }
 
         const balloonMarker = new YMapMarker({ coordinates: companyData.coords, zIndex: 2500 }, balloonDiv);
         map.addChild(balloonMarker);
@@ -115,7 +128,16 @@ document.addEventListener('DOMContentLoaded', async function () {
             pin.type = 'button';
             pin.className = 'mycompanymap-custom-marker';
             pin.setAttribute('aria-label', feature.properties.name || 'Метка на карте');
-            pin.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+            const icon = document.createElement('span');
+            icon.className = 'mycompanymap-custom-marker__icon';
+            icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+            pin.append(icon);
+            if (options.markerLabels && feature.properties.name) {
+                const label = document.createElement('span');
+                label.className = 'mycompanymap-custom-marker__label';
+                label.textContent = feature.properties.name;
+                pin.append(label);
+            }
             pin.addEventListener('click', () => showBalloon(feature.properties));
             return new YMapMarker({ coordinates: feature.geometry.coordinates }, pin);
         }
@@ -276,6 +298,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
+    if (loading) loading.remove();
     if (mapContainer && mapContainer.parentElement.classList) {
         mapContainer.parentElement.classList.add('loaded');
     } else {
@@ -284,7 +307,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (error) {
         console.error('Не удалось загрузить карту:', error);
         const placeholder = root.querySelector('.map-loading-placeholder');
-        if (placeholder) placeholder.textContent = options.messages?.loadError || 'Could not load the map.';
+        if (placeholder) { placeholder.hidden = false; placeholder.textContent = options.messages?.loadError || 'Could not load the map.'; }
     }
     }
 });

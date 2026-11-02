@@ -9,7 +9,7 @@
     <version>2.0.1</version>
     <infourl title="My Company Map v2.0.1">https://github.com/shivayanamahom/mod_mycompanymap/releases/tag/v2.0.1</infourl>
     <downloads><downloadurl type="full" format="zip">https://github.com/shivayanamahom/mod_mycompanymap/releases/download/v2.0.1/mod_mycompanymap-2.0.1.zip</downloadurl></downloads>
-    <sha256>9f429ed407286a3b83f044d883ec2741dbe601820b862c395d7f5bebc08e32fb</sha256>
+    <sha256>beb4a39acd37c9d40932a3acbaaad88e60b8fc705bc277e0939d1b81068f62be</sha256>
     <maintainer>Dharma Design</maintainer>
     <maintainerurl>https://github.com/shivayanamahom</maintainerurl>
     <targetplatform name="joomla" version="((5|6)\..*)" />

@@ -95,7 +95,7 @@ $filterId = $scriptOptions['filterId'];
     <?php endif; ?>
 
     <div class="map-container">
-        <div id="<?php echo htmlspecialchars($mapContainerId); ?>" 
+        <div id="<?php echo htmlspecialchars($mapContainerId); ?>"
              style="width: <?php echo htmlspecialchars($params->get('map_width', '100%'), ENT_QUOTES, 'UTF-8'); ?>; height: <?php echo htmlspecialchars($params->get('map_height', '400px'), ENT_QUOTES, 'UTF-8'); ?>;">
             <div class="map-loading-placeholder"><?php echo Text::_('MOD_MYCOMPANYMAP_MAP_LOADING'); ?></div>
         </div>
@@ -124,24 +124,24 @@ $filterId = $scriptOptions['filterId'];
                     <?php endif; ?>
                     <?php if (!empty($company->company_address)) : ?>
                         <p class="company-address">
-                            <strong><?php echo Text::_('MOD_MYCOMPANYMAP_FIELD_ADDRESS_LABEL'); ?>:</strong> 
+                            <strong><?php echo Text::_('MOD_MYCOMPANYMAP_FIELD_ADDRESS_LABEL'); ?>:</strong>
                             <?php echo htmlspecialchars($company->company_address); ?>
                         </p>
                     <?php endif; ?>
                     <?php if (!empty($company->company_phone)) : ?>
                         <p class="company-phone">
-                            <strong><?php echo Text::_('MOD_MYCOMPANYMAP_FIELD_PHONE_LABEL'); ?>:</strong> 
+                            <strong><?php echo Text::_('MOD_MYCOMPANYMAP_FIELD_PHONE_LABEL'); ?>:</strong>
                             <?php echo htmlspecialchars($company->company_phone); ?>
                         </p>
                     <?php endif; ?>
                     <?php if (!empty($company->company_city)) : ?>
                         <p class="company-city">
-                            <strong><?php echo Text::_('MOD_MYCOMPANYMAP_FIELD_CITY_LABEL'); ?>:</strong> 
+                            <strong><?php echo Text::_('MOD_MYCOMPANYMAP_FIELD_CITY_LABEL'); ?>:</strong>
                             <?php echo htmlspecialchars($company->company_city); ?>
                         </p>
                     <?php endif; ?>
-                    <button type="button" class="center-on-map-btn" 
-                            data-coords="<?php echo $coordsAttr; ?>" 
+                    <button type="button" class="center-on-map-btn"
+                            data-coords="<?php echo $coordsAttr; ?>"
                             data-placemarkid="<?php echo $company->id; ?>">
                         <?php echo Text::_('MOD_MYCOMPANYMAP_SHOW_ON_MAP'); ?>
                     </button>

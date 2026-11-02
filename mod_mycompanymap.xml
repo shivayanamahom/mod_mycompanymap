@@ -13,9 +13,9 @@
     <updateservers>
         <server type="extension" priority="1" name="My Company Map Updates">https://raw.githubusercontent.com/shivayanamahom/mod_mycompanymap/main/updates.xml</server>
     </updateservers>
-    
+
     <namespace path="src">Joomla\Module\Mycompanymap\Site</namespace>
-    
+
     <files>
         <filename module="mod_mycompanymap">mod_mycompanymap.php</filename>
         <folder>services</folder>
@@ -23,20 +23,20 @@
         <folder>tmpl</folder>
         <folder>language</folder>
     </files>
-    
+
     <media destination="mod_mycompanymap" folder="media">
         <folder>css</folder>
         <folder>js</folder>
         <filename>joomla.asset.json</filename>
     </media>
-    
+
     <languages folder="language">
         <language tag="en-GB">en-GB/mod_mycompanymap.ini</language>
         <language tag="en-GB">en-GB/mod_mycompanymap.sys.ini</language>
         <language tag="ru-RU">ru-RU/mod_mycompanymap.ini</language>
         <language tag="ru-RU">ru-RU/mod_mycompanymap.sys.ini</language>
     </languages>
-    
+
     <config>
         <fields name="params">
             <fieldset name="settings" label="MOD_MYCOMPANYMAP_SETTINGS_LABEL">
@@ -47,7 +47,7 @@
                     description="MOD_MYCOMPANYMAP_API_KEY_DESC"
                     required="true"
                 />
-                
+
                 <field
                     name="map_width"
                     type="text"
@@ -55,7 +55,7 @@
                     description="MOD_MYCOMPANYMAP_WIDTH_DESC"
                     default="100%"
                 />
-                
+
                 <field
                     name="map_height"
                     type="text"
@@ -63,7 +63,7 @@
                     description="MOD_MYCOMPANYMAP_HEIGHT_DESC"
                     default="400px"
                 />
-                
+
                 <field
                     name="icon_style"
                     type="list"
@@ -77,7 +77,7 @@
                     <option value="islands#violetIcon">MOD_MYCOMPANYMAP_ICON_VIOLET</option>
                     <option value="islands#darkOrangeIcon">MOD_MYCOMPANYMAP_ICON_ORANGE</option>
                 </field>
-                
+
                 <field
                     name="map_default_center"
                     type="text"
@@ -86,7 +86,7 @@
                     default="55.751574, 37.573856"
                     hint="lat,lng"
                 />
-                
+
                 <field
                     name="map_default_zoom"
                     type="number"
@@ -98,7 +98,7 @@
                     step="1"
                 />
             </fieldset>
-            
+
             <fieldset name="advanced" label="JGLOBAL_FIELDSET_ADVANCED">
                 <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" class="form-select" default="_:default" />
             </fieldset>
@@ -124,7 +124,7 @@
                             size="30"
                             hint="MOD_MYCOMPANYMAP_FIELD_NAME_HINT"
                         />
-                        
+
                         <field
                             name="company_address"
                             type="text"
@@ -132,7 +132,7 @@
                             size="30"
                             hint="MOD_MYCOMPANYMAP_FIELD_ADDRESS_HINT"
                         />
-                        
+
                         <field
                             name="company_phone"
                             type="text"
@@ -140,7 +140,7 @@
                             size="15"
                             hint="MOD_MYCOMPANYMAP_FIELD_PHONE_HINT"
                         />
-                        
+
                         <field
                             name="company_city"
                             type="text"
@@ -149,7 +149,7 @@
                             size="20"
                             hint="MOD_MYCOMPANYMAP_FIELD_CITY_HINT"
                         />
-                        
+
                         <field
                             name="company_anchor"
                             type="text"
